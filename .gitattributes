@@ -1,0 +1,37 @@
+# =====================================================================
+# Fideflix - Practica Programada 5
+# .gitattributes
+#
+# POR QUE EXISTE ESTE ARCHIVO:
+# Windows termina las lineas con CRLF (\r\n) y Linux/macOS con LF (\n).
+# Sin normalizacion, si un integrante trabaja en Windows y otro no, git
+# reporta el archivo COMPLETO como modificado aunque solo se haya tocado
+# una linea. Eso vuelve inutil el "git diff" y convierte cualquier merge
+# en un campo minado.
+#
+# La solucion no es que todos usen el mismo sistema operativo: es declarar
+# aqui la normalizacion, de una vez, para todo el equipo.
+# =====================================================================
+
+# Normalizacion automatica: git guarda LF en el repositorio y entrega
+# a cada quien el final de linea que su sistema espera.
+* text=auto
+
+# Archivos de codigo y configuracion: siempre texto.
+*.java      text diff=java
+*.sql       text
+*.md        text
+*.xml       text
+*.properties text
+*.form      text
+.gitignore  text
+.gitattributes text
+
+# Binarios: git NO debe intentar convertir nada aqui.
+# Hacerlo corromperia el archivo.
+*.jar       binary
+*.png       binary
+*.jpg       binary
+*.gif       binary
+*.pdf       binary
+*.dat       binary

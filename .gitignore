@@ -1,0 +1,51 @@
+# =====================================================================
+# Fideflix - Practica Programada 5
+# .gitignore
+#
+# Regla general: al repositorio va lo que se ESCRIBE, no lo que se GENERA,
+# y nunca lo que es SECRETO o LOCAL de una maquina.
+# =====================================================================
+
+# --- Artefactos de compilacion (salida del compilador, se regeneran) ---
+# Versionar salida es como guardar el pan junto con la harina: ocupa,
+# se desactualiza y en trabajo grupal genera conflictos binarios constantes.
+build/
+dist/
+*.class
+*.jar
+# EXCEPCION: el driver Connector/J SI se versiona, para que el grupo
+# clone y compile sin cazar descargas. El "**/" cubre lib/ este donde este.
+!**/lib/*.jar
+
+# --- Configuracion local de NetBeans ---
+# Contiene rutas absolutas de ESTA maquina (C:\Users\micha\...).
+# A un companero le rompe la apertura del proyecto.
+#
+# OJO CON LA BARRA: un patron con barra INTERNA queda anclado a la carpeta
+# del .gitignore. "nbproject/private/" solo coincidiria con
+# <raiz>/nbproject/private/, y aqui la ruta real es
+# Fideflix/nbproject/private/. El prefijo "**/" lo libera a cualquier nivel.
+**/nbproject/private/
+
+# --- CREDENCIALES: nunca al repositorio ---
+# El repo publico lleva la plantilla (db.properties.example), jamas el
+# archivo real. Un secreto commiteado queda en el historial de git PARA
+# SIEMPRE: borrarlo en un commit posterior solo lo saca de la punta,
+# no del historial. La unica remediacion real es rotar la contrasena.
+db.properties
+**/db.properties
+*.env
+credenciales*
+
+# --- Datos locales heredados de PP4 ---
+# Persistencia de la practica anterior. A partir de la Fase 5 los usuarios
+# viven en MySQL y este archivo desaparece.
+usuarios.dat
+
+# --- Sistema operativo / editores ---
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.tmp
+*~
