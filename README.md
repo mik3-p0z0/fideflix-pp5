@@ -84,4 +84,4 @@ se documentan de forma explícita al cierre de la práctica.
 
 ## Integrantes
 
-- Michael — <!-- completar con el resto del grupo -->
+- Michael Pozo Lopez — <!-- completar con el resto del grupo -->
