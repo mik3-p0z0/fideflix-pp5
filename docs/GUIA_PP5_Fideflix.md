@@ -486,7 +486,11 @@ JDBC es una **interfaz estándar** de Java; no sabe hablar MySQL. El Connector/J
 ### Pasos
 
 1. Descargá **MySQL Connector/J** desde dev.mysql.com/downloads/connector/j (elegí *Platform Independent*, extraé el `.jar`). Verificá cuál es la versión vigente en el sitio; debe ser compatible con tu MySQL Server 8.x.
-2. Creá una carpeta `lib/` en la raíz del repo y copiá ahí el `.jar`. **Sí se versiona**: que tus compañeros clonen y compile sin cazar descargas.
+2. Creá la carpeta **`Fideflix/lib/`** (dentro del proyecto NetBeans, **no** en la raíz del repo) y copiá ahí el `.jar`. **Sí se versiona**: que tus compañeros clonen y compile sin cazar descargas.
+
+   **Por qué dentro del proyecto y no en la raíz.** La consigna pide entregar *"un archivo comprimido con las fuentes"*: vas a comprimir `Fideflix/`. Si el `.jar` viviera en la raíz del repo, NetBeans lo referenciaría como `../lib/...`, una ruta que **sale** del proyecto y que el ZIP no incluye. El profesor lo abriría y no compilaría — el error aparecería en la máquina de quien te evalúa, el peor lugar posible para descubrirlo.
+
+   **Regla general del proyecto:** todo lo que la aplicación necesita para *ejecutarse* (`lib/`, `db.properties`) va dentro de `Fideflix/`. Lo que rodea al proyecto y lee una persona (`sql/`, `docs/`, `README.md`) va en la raíz del repo. La frontera es: ¿lo necesita el programa corriendo, o lo necesita quien lee el repositorio?
 3. NetBeans: clic derecho en el proyecto → *Properties* → *Libraries* → *Add JAR/Folder* → seleccioná el `.jar` con ruta **relativa**.
 4. Verificá que `nbproject/project.properties` ahora tenga el jar en `javac.classpath` (hoy está vacío) y commiteá ese cambio.
 
@@ -902,18 +906,26 @@ Marcá cada casilla. Lo que no se prueba, no funciona: solo no ha fallado todav�
 
 ```
 fideflix-pp5/
-├── README.md                    <- ver plantilla abajo
+├── README.md
 ├── .gitignore
-├── db.properties.example
-├── sql/
+├── .gitattributes
+├── sql/                              <- lo lee una PERSONA (o Workbench)
 │   ├── 01_schema.sql
-│   └── 02_datos_iniciales.sql
+│   ├── 02_datos_iniciales.sql
+│   └── 03_verificacion.sql
 ├── docs/
-│   └── modelo_er.png            <- exportado desde Workbench (Database > Reverse Engineer)
-├── lib/
-│   └── mysql-connector-j-<version>.jar
-└── Fideflix/                    <- proyecto NetBeans
+│   ├── GUIA_PP5_Fideflix.md
+│   └── modelo_er.png                 <- Workbench: Database > Reverse Engineer
+└── Fideflix/                         <- proyecto NetBeans: lo necesita el PROGRAMA
+    ├── lib/
+    │   └── mysql-connector-j-<version>.jar
+    ├── db.properties.example         <- plantilla, se versiona
+    ├── db.properties                 <- credenciales reales, NO se versiona
+    ├── nbproject/
+    └── src/fideflix/...
 ```
+
+**El criterio de ubicación**: dentro de `Fideflix/` va todo lo que la aplicación necesita en tiempo de ejecución (el driver y la configuración de conexión). En la raíz va lo que lee una persona. Al comprimir `Fideflix/` para la entrega, el proyecto queda completo y autosuficiente.
 
 **El diagrama ER se genera solo:** Workbench → *Database* → *Reverse Engineer* → seleccionar `fideflix`. Exportalo como imagen. Un profesor que ve el ER entiende tu modelo en diez segundos; sin él tiene que leer el DDL. Es el mejor retorno por esfuerzo de toda la entrega.
 

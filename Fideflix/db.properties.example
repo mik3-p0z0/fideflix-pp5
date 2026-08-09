@@ -1,0 +1,47 @@
+# =====================================================================
+# Fideflix - Practica Programada 5
+# PLANTILLA de configuracion de base de datos.
+#
+# ESTE archivo SI se versiona (no tiene secretos reales).
+# El archivo db.properties, con las credenciales verdaderas, NO se
+# versiona: esta en .gitignore.
+#
+# INSTALACION:
+#   1. Copiar este archivo como db.properties en la misma carpeta.
+#   2. Reemplazar REEMPLAZAR_CON_TU_CLAVE por la contrasena real
+#      del usuario fideflix_app.
+#
+# POR QUE ESTA SEPARACION: el codigo y los secretos tienen ciclos de
+# vida distintos. El codigo se comparte, se publica y se versiona; los
+# secretos se rotan y no salen de la maquina. Mezclarlos obliga a elegir
+# entre compartir el proyecto o proteger la clave.
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# URL de conexion JDBC. Anatomia:
+#   jdbc:mysql://  -> protocolo y driver
+#   localhost:3306 -> host y puerto del servidor MySQL
+#   /fideflix      -> base de datos a la que nos conectamos
+#   ?parametros    -> opciones del driver
+#
+# serverTimezone: sin este parametro el driver puede fallar al leer
+#   columnas DATE/DATETIME si la zona horaria del servidor es ambigua.
+#
+# useSSL=false: ADVERTENCIA DE SEGURIDAD. Desactiva el cifrado entre la
+#   aplicacion y MySQL. Es tolerable UNICAMENTE porque ambos corren en
+#   la misma maquina y el trafico no sale por la red. En cualquier
+#   despliegue real esto significa que quien observe la red puede leer
+#   tus consultas y tus credenciales. Limitacion declarada en el README.
+#
+# allowPublicKeyRetrieval=true: necesario con el plugin de autenticacion
+#   caching_sha2_password de MySQL 8 cuando no se usa TLS. Tiene la misma
+#   condicion que el punto anterior: aceptable solo en localhost.
+# ---------------------------------------------------------------------
+db.url=jdbc:mysql://localhost:3306/fideflix?serverTimezone=America/Costa_Rica&useSSL=false&allowPublicKeyRetrieval=true
+
+# Usuario de aplicacion con privilegios minimos (SELECT/INSERT/UPDATE/DELETE).
+# Nunca root: si la aplicacion tuviera una falla, root podria destruir
+# el motor entero. Principio de minimo privilegio.
+db.user=fideflix_app
+
+db.password=REEMPLAZAR_CON_TU_CLAVE
