@@ -1,20 +1,41 @@
 package fideflix.logica;
 
-import java.util.ArrayList;
-        
+/*
+ * CLASE BASE de la jerarquia de contenido (Pelicula, Documental, Serie).
+ *
+ * CAMBIOS DE LA PP5 respecto a la PP4:
+ *
+ * 1. Se agrega el atributo 'id'. Sin un identificador estable no existe
+ *    UPDATE ... WHERE id = ? ni DELETE: hasta ahora los objetos se
+ *    distinguian por titulo, pero el titulo es justamente uno de los
+ *    campos que el usuario puede editar. Una llave no puede ser un dato
+ *    que cambia. El id lo genera la base de datos (AUTO_INCREMENT) y
+ *    vale 0 mientras el objeto todavia no fue persistido.
+ *
+ * 2. Se ELIMINA el ArrayList<String> comentarios que era 'static'.
+ *    Era un bug real: al ser estatico, la lista pertenecia a la CLASE y
+ *    no a cada objeto, de modo que todos los audiovisuales compartian
+ *    los mismos comentarios. Un comentario sobre "Interstellar" aparecia
+ *    tambien en "Breaking Bad".
+ *    Ahora los comentarios viven en la tabla 'comentario', atados por
+ *    llave foranea a UNA obra concreta, y se consultan por demanda con
+ *    ComentarioDAO. El modelo relacional hace ese error imposible.
+ */
 public abstract  class Audiovisual {
-    
+
+    /* Identificador asignado por la base de datos.
+     * 0 = objeto nuevo, todavia no insertado. */
+    private int id;
+
     private String titulo;
     private String descripcion;
     private int estreno;
     private String clasificacion;
     private double calificacion_IMDb;
     private String genero;
-    //Nuevo atributo para almacenar comentarios 
-    private static ArrayList<String> comentarios = new ArrayList<>();
-    
+
     public Audiovisual(String titulo, String descripcion, int estreno, String clasificacion, double calificacion_IMDb, String genero){
-        
+
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.estreno = estreno;
@@ -23,21 +44,15 @@ public abstract  class Audiovisual {
         this.genero = genero;
     }
     
-// ─── METODO ESTATICO: agregarComentario 
-    // Metodo estatico --> pertenece a la clase, no al objeto.
-    // Se llama  en el main como --> Audiovisual.agregarComentario
-    // NO necesita instancia para funcionar.
-    // Puede acceder a 'comentarios' directamente porque tambien es static.
-public static void agregarComentario(String comentario) {
-        comentarios.add(comentario);
-        System.out.println("Comentario agregado: \"" + comentario + "\"");
+    // ─── Identificador de base de datos ──────────────────────────────
+    public int getId(){
+        return id;
     }
 
-//Getter de la lista de comentarios tambien estatico 
-public static ArrayList<String> getComentarios() {
-    return comentarios;
-}
- 
+    public void setId(int id){
+        this.id = id;
+    }
+
     public String getTitulo(){
         return titulo;
     }

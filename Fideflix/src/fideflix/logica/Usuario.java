@@ -18,12 +18,18 @@ con ObjectOutputStream y volver a leerla con ObjectInputStream.
 public class Usuario implements Comparable<Usuario>, Serializable {
     
     private static final long serialVersionUID = 1L;
-    
+
+    /* PP5: identificador asignado por MySQL (AUTO_INCREMENT).
+     * Necesario para relacionar comentarios con su autor mediante la
+     * llave foranea comentario.usuario_id. Vale 0 mientras el objeto
+     * todavia no fue persistido. */
+    private int id;
+
     private String nombre;
     private String email;
     private String contrasena;
     private String fechaRegistro;
-    
+
     public Usuario(String nombre, String email, String contrasena, String fechaRegistro){
         this.nombre = nombre;
         this.email = email;
@@ -32,6 +38,14 @@ public class Usuario implements Comparable<Usuario>, Serializable {
     
     }
     
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
  public String getNombre() {
         return nombre;
     }

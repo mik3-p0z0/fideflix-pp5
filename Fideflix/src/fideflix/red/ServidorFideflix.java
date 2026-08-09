@@ -28,12 +28,22 @@ import java.util.function.Consumer;
 public class ServidorFideflix {
 
     /*
-     * Candado global para el acceso al archivo usuarios.dat.
-     * Todos los HiloCliente sincronizan sobre ESTE MISMO objeto: es la
-     * unica forma de que synchronized los excluya mutuamente (un candado
-     * por hilo no protegeria nada).
+     * ─── PP5: SE ELIMINO EL CANDADO GLOBAL ──────────────────────────
+     * Aqui vivia CANDADO_ARCHIVO, el objeto sobre el que todos los
+     * HiloCliente sincronizaban para no pisarse al escribir usuarios.dat.
+     * Con un archivo era imprescindible: leer-modificar-guardar no es
+     * atomico y el ultimo en guardar borraba el trabajo del otro.
+     *
+     * Con MySQL el candado no solo sobra: perjudica. El motor ya
+     * garantiza el acceso concurrente mediante transacciones y bloqueo
+     * a nivel de FILA (InnoDB), que es mucho mas fino que un candado
+     * global de la JVM. Mantenerlo obligaria a que los N hilos pasen de
+     * a uno por la base, anulando en la practica el multihilo que la
+     * consigna pide.
+     *
+     * La atomicidad ya no la sostiene un synchronized de Java: la
+     * sostienen el COMMIT/ROLLBACK y las restricciones del motor.
      */
-    public static final Object CANDADO_ARCHIVO = new Object();
 
     private ServerSocket serverSocket;
     private Thread hiloAceptador;

@@ -151,15 +151,24 @@ try {
 
     String respuesta = fideflix.red.ClienteFideflix.enviarPeticion(peticion);
 
-    // La respuesta llega como OK|nombre|fecha, DENEGADO o ERROR|detalle.
+    // PP5: la respuesta llega como OK|id|nombre|fecha, DENEGADO o ERROR|detalle.
+    // El 'id' es nuevo: el menu principal lo necesita para poder publicar
+    // comentarios, porque la tabla 'comentario' exige un usuario_id.
     String[] partes = respuesta.split(fideflix.red.Protocolo.SEPARADOR_REGEX, -1);
 
     switch (partes[0]) {
         case fideflix.red.Protocolo.RSP_OK -> {
-            // El servidor confirma acceso y devuelve nombre + fecha de
-            // registro; con eso reconstruimos el Usuario para el menu.
+            // El servidor confirma acceso y devuelve id + nombre + fecha
+            // de registro; con eso reconstruimos el Usuario para el menu.
+            //
+            // La contrasena se pasa vacia a proposito: una vez validado
+            // el acceso, el cliente no necesita conservar la credencial
+            // en memoria. Guardarla "por si acaso" solo agranda la
+            // superficie de exposicion sin ningun beneficio.
             fideflix.logica.Usuario encontrado = new fideflix.logica.Usuario(
-                    partes[1], email, contrasena, partes[2]);
+                    partes[2], email, "", partes[3]);
+            encontrado.setId(Integer.parseInt(partes[1]));
+
             new VentanaMenuPrincipal(encontrado).setVisible(true);
             this.dispose();
         }

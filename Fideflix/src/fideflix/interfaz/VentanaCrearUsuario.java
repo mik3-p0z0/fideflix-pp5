@@ -14,6 +14,19 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         // Cerrar esta ventana no debe terminar la aplicacion completa
         // (servidor + demas clientes viven en la misma JVM).
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        // PP5: la fecha de registro pasa a ser INFORMATIVA.
+        // Antes era un campo de texto libre, lo que traia dos problemas:
+        // cualquier cosa que no fuera una fecha valida rompia la columna
+        // DATE, y ademas el usuario podia declarar la fecha que quisiera.
+        // La fecha de registro es un hecho que el sistema conoce, no un
+        // dato que se pregunta: ahora la asigna la base con CURDATE().
+        // Se deja visible porque informa, pero no se puede editar.
+        txtFechaRegistro.setText(java.time.LocalDate.now().toString());
+        txtFechaRegistro.setEditable(false);
+        txtFechaRegistro.setFocusable(false);
+        txtFechaRegistro.setToolTipText(
+                "La asigna el servidor automaticamente al registrarse.");
     }
 
     /**
@@ -193,14 +206,18 @@ try {
 
     switch (partes[0]) {
         case fideflix.red.Protocolo.RSP_OK -> {
+            // PP5: el servidor devuelve OK|id (el AUTO_INCREMENT que
+            // genero MySQL), no el total de usuarios. El id identifica
+            // al registro creado; el total era un dato que obligaba a
+            // contar toda la tabla en cada alta sin que nadie lo usara.
             JOptionPane.showMessageDialog(this,
-                    "Usuario guardado. Usuarios en total: " + partes[1],
+                    "Usuario registrado correctamente (código " + partes[1] + ").",
                     "Exito", JOptionPane.INFORMATION_MESSAGE);
             // Limpiar el formulario para el siguiente usuario.
+            // La fecha NO se limpia: es informativa y la fija el sistema.
             txtNombre.setText("");
             txtEmail.setText("");
             txtContrasena.setText("");
-            txtFechaRegistro.setText("");
             txtNombre.requestFocus();
         }
         case fideflix.red.Protocolo.RSP_DUPLICADO ->
