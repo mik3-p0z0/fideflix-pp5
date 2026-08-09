@@ -1,8 +1,12 @@
-package fideflix.red;
+package fideflix.pruebas;
 
 import fideflix.logica.Audiovisual;
 import fideflix.logica.Pelicula;
 import fideflix.logica.Serie;
+import fideflix.red.ClienteFideflix;
+import fideflix.red.CodificadorAudiovisual;
+import fideflix.red.Protocolo;
+import fideflix.red.ServidorFideflix;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;

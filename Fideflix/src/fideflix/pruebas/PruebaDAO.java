@@ -1,4 +1,4 @@
-package fideflix.persistencia;
+package fideflix.pruebas;
 
 import fideflix.logica.Audiovisual;
 import fideflix.logica.Comentario;
@@ -7,6 +7,10 @@ import fideflix.logica.ItemCatalogo;
 import fideflix.logica.Pelicula;
 import fideflix.logica.Serie;
 import fideflix.logica.Usuario;
+import fideflix.persistencia.AudiovisualDAO;
+import fideflix.persistencia.CatalogoDAO;
+import fideflix.persistencia.ComentarioDAO;
+import fideflix.persistencia.UsuarioDAO;
 import java.sql.SQLException;
 import java.util.List;
 

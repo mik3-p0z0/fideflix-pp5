@@ -10,9 +10,11 @@ Antes de empezar, dejá la base en estado conocido: ejecutá `sql/01_schema.sql`
 
 Clic derecho sobre cada clase → *Run File* (Shift+F6). En este orden:
 
-- [ ] **`persistencia.PruebaConexion`** → imprime motor, driver y las 6 obras.
-- [ ] **`persistencia.PruebaDAO`** → `30 correctas, 0 fallidas`.
-- [ ] **`red.PruebaRed`** → todas en `[OK]`. *(Cerrar `Main` antes: comparten el puerto 5000.)*
+Están en el paquete `fideflix.pruebas`.
+
+- [ ] **`PruebaConexion`** → imprime motor, driver y las 6 obras.
+- [ ] **`PruebaDAO`** → `30 correctas, 0 fallidas`.
+- [ ] **`PruebaRed`** → todas en `[OK]`. *(Cerrar `Main` antes: comparten el puerto 5000.)*
 
 Si alguna falla, parar acá. Las siguientes pruebas asumen que la base y la red están sanas.
 

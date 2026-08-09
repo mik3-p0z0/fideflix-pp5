@@ -1,4 +1,4 @@
-package fideflix.persistencia;
+package fideflix.pruebas;
 
 import java.io.FileInputStream;
 import java.io.IOException;

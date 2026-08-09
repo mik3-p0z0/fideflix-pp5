@@ -75,6 +75,7 @@ Cada conexión aceptada se delega de inmediato a un `HiloCliente` nuevo y el ace
 | `fideflix.red` | Protocolo, servidor, hilos de atención, cliente de sockets y codificador de mensajes |
 | `fideflix.interfaz` | Ventanas Swing y punto de entrada |
 | `fideflix.excepciones` | Excepciones propias del dominio |
+| `fideflix.pruebas` | Programas de verificación. **No** forman parte del flujo de la aplicación |
 
 Las dependencias van en una sola dirección: `interfaz → red → persistencia → logica`.
 Ninguna ventana conoce JDBC; ningún DAO conoce Swing.
@@ -236,9 +237,13 @@ Tres clases ejecutables (clic derecho → *Run File*), en orden de alcance creci
 
 | Clase | Qué aísla |
 |---|---|
-| `persistencia.PruebaConexion` | Conectividad JDBC: driver, credenciales, base alcanzable |
-| `persistencia.PruebaDAO` | La capa de datos completa — 30 verificaciones |
-| `red.PruebaRed` | Extremo a extremo por sockets reales, incluida la concurrencia |
+| `pruebas.PruebaConexion` | Conectividad JDBC: driver, credenciales, base alcanzable |
+| `pruebas.PruebaDAO` | La capa de datos completa — 30 verificaciones |
+| `pruebas.PruebaRed` | Extremo a extremo por sockets reales, incluida la concurrencia |
+
+Viven en el paquete `fideflix.pruebas`, separado del código de producción. Ninguna clase de la
+aplicación las invoca: son puntos de entrada aislados que se ejecutan a mano. Su razón de ser
+está documentada en `package-info.java`.
 
 > `PruebaRed` levanta su propio servidor: **cerrar `Main` antes de ejecutarla** o el puerto 5000
 > estará ocupado.
